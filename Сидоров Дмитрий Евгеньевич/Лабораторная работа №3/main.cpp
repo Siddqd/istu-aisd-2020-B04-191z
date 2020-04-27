@@ -1,43 +1,122 @@
 #include <iostream>
 
-#define n 10
+//#define n 10
 
-int *v;
-bool *u;
 
-int hsh (int k){
-return k%n;
+
+int hsh(int k, int s) {
+    return k % s;
 }
 
-void add (int k) {
-int ke=hsh(k);
+int num_k(int k, int* vx, int* s) {
+    int ke = hsh(k, *s);
+    int i = ke;
+    int sz = *s;
+    while (sz > 0) {
+        if (vx[i] == k) return i;
+        else {
+            i = (i + 1) % *s;
+            sz--;
+        }
+    }
+    return -1;
+}
 
-while (u[ke] and v[ke]!=k )
-ke=(ke+1)%n;
-if(!u[ke]) {
-u[ke]=true;
-v[ke]=k;
+void del_key(int k, int* vx, bool* ux, int* s) {
+    int del_num = num_k(k, vx, s);
+    if (del_num > 0) {
+        vx[del_num] = 0;
+        ux[del_num] = false;
+    }
+    else std::cout << "Didn't find key = " << k;
 }
+
+void add(int k, int* vx, bool* ux, int* s) {
+    int ke = hsh(k, *s);
+    int overfl = *s;//
+    int db_s = *s + *s;
+    int* vv;
+    bool* uu;
+
+    while (overfl and ux[ke] and vx[ke] != k)
+    {
+        ke = (ke + 1) % *s;
+        overfl--;
+    }
+    if (overfl == 0)
+    {
+        vv = new int[db_s];
+        uu = new bool[db_s];
+        for (int i = 0;i < db_s;i++) { uu[i] = false; vv[i] = 0; }
+        for (int i = 0;i < *s;i++) add(vx[i], vv, uu, &db_s);
+        add(k, vv, uu, &db_s);
+        for (int i = 0;i < db_s;i++) std::cout << vv[i] << " ";
+        std::cout << std::endl;
+        *s = db_s;
+        delete[] vx;
+        delete[] ux;
+        ;vx = new int[db_s];
+        ;ux = new bool[db_s];
+        vx = vv;
+        ux = uu;
+        for (int i = 0;i < db_s;i++) std::cout << vx[i] << " ";
+        std::cout << std::endl;
+        ;delete vv;
+        ;delete uu;
+
+    }
+    if (!ux[ke])
+    {
+        ux[ke] = true;
+        vx[ke] = k;
+    }
+
 }
+
+
 
 using namespace std;
 
 int main()
 {
-v = new int [n];
-u = new bool [n];
+    int sizeArr = 10;
+    int x, kol;
 
-for(int i=0;i<n;i++) { u[i]=false; v[i]=0; };
+    int* v;
+    bool* u;
 
-add(5);
-add(15);
-add(7);
-add(42);
-add(32);
+    v = new int[sizeArr];
+    u = new bool[sizeArr];
 
-for(int i=0;i<n;i++) cout << v[i] << " ";
+    /*add(15,v,u,&sizeArr);
+    add(7,v,u,&sizeArr);
+    add(42,v,u,&sizeArr);
+    add(31,v,u,&sizeArr);
+    add(12,v,u,&sizeArr);
+    add(18,v,u,&sizeArr);
+    add(34,v,u,&sizeArr);
+    add(12,v,u,&sizeArr);
+    add(36,v,u,&sizeArr);
+    */
+    for (int i = 0;i < sizeArr;i++) { u[i] = false; v[i] = 0; };
+    cout << "Enter num of elements to add >>>  ";
+    cin >> kol;
+    cout << "Enter list of " << kol << " values to add below" << endl;
+    for (int i = 0;i < kol;i++) {
+        cin >> x;
+        add(x, v, u, &sizeArr);
+    }
 
-return 0;
+
+    for (int i = 0;i < sizeArr;i++) cout << v[i] << " ";
+
+    cout << endl << "Enter value to delete >>   ";
+    cin >> x;
+    del_key(x, v, u, &sizeArr);
+
+    for (int i = 0;i < sizeArr;i++) cout << v[i] << " ";
+
+    delete u;
+    delete v;
+    return 0;
 }
-
-
