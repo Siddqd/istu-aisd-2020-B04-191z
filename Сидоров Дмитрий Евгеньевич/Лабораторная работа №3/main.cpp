@@ -8,7 +8,7 @@ int hsh(int k, int s) {
     return k % s;
 }
 
-int num_k(int k, int* vx, int* s) {
+int num_k(int k, int* vx, int* s) { //return number of key, if find it in table
     int ke = hsh(k, *s);
     int i = ke;
     int sz = *s;
@@ -22,18 +22,18 @@ int num_k(int k, int* vx, int* s) {
     return -1;
 }
 
-void del_key(int k, int* vx, bool* ux, int* s) {
-    int del_num = num_k(k, vx, s);
-    if (del_num > 0) {
-        vx[del_num] = 0;
-        ux[del_num] = false;
+void del_k(int k, int* vx, bool* ux, int* s) { //delete by key
+    int del_no = num_k(k, vx, s);
+    if (del_no > 0) {
+        vx[del_no] = 0;
+        ux[del_no] = false;
     }
     else std::cout << "Didn't find key = " << k;
 }
 
 void add(int k, int* vx, bool* ux, int* s) {
     int ke = hsh(k, *s);
-    int overfl = *s;//
+    int overfl = *s;
     int db_s = *s + *s;
     int* vv;
     bool* uu;
@@ -43,8 +43,9 @@ void add(int k, int* vx, bool* ux, int* s) {
         ke = (ke + 1) % *s;
         overfl--;
     }
-    if (overfl == 0)
-    {
+    if (overfl == 0)                //udvoenie din massiva
+    {                               //vnutri function add rabotaet,
+                                    //posle vihoda iz nee v main v massive kakayto hren'
         vv = new int[db_s];
         uu = new bool[db_s];
         for (int i = 0;i < db_s;i++) { uu[i] = false; vv[i] = 0; }
@@ -55,14 +56,14 @@ void add(int k, int* vx, bool* ux, int* s) {
         *s = db_s;
         delete[] vx;
         delete[] ux;
-        ;vx = new int[db_s];
-        ;ux = new bool[db_s];
+        //vx = new int[db_s]; //stavil ; posle lab v assemblere ne otoshel
+        //ux = new bool[db_s];
         vx = vv;
         ux = uu;
         for (int i = 0;i < db_s;i++) std::cout << vx[i] << " ";
         std::cout << std::endl;
-        ;delete vv;
-        ;delete uu;
+        //delete vv;
+        //delete uu;
 
     }
     if (!ux[ke])
@@ -88,6 +89,7 @@ int main()
     v = new int[sizeArr];
     u = new bool[sizeArr];
 
+
     /*add(15,v,u,&sizeArr);
     add(7,v,u,&sizeArr);
     add(42,v,u,&sizeArr);
@@ -112,11 +114,11 @@ int main()
 
     cout << endl << "Enter value to delete >>   ";
     cin >> x;
-    del_key(x, v, u, &sizeArr);
+    del_k(x, v, u, &sizeArr);
 
     for (int i = 0;i < sizeArr;i++) cout << v[i] << " ";
 
-    delete u;
-    delete v;
+    delete [] u;
+    delete [] v;
     return 0;
 }
