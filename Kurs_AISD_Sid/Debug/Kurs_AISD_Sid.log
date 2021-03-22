@@ -1,0 +1,7 @@
+﻿  Kurs_AISD_Sid.cpp
+X:\github\Kurs_AISD_Sid\Kurs_AISD_Sid.cpp(63,23): warning C4018: <: несоответствие типов со знаком и без знака
+X:\github\Kurs_AISD_Sid\Kurs_AISD_Sid.cpp(66,35): warning C4018: <: несоответствие типов со знаком и без знака
+X:\github\Kurs_AISD_Sid\Kurs_AISD_Sid.cpp(103,30): warning C4018: <: несоответствие типов со знаком и без знака
+X:\github\Kurs_AISD_Sid\Kurs_AISD_Sid.cpp(153,23): warning C4018: <: несоответствие типов со знаком и без знака
+X:\github\Kurs_AISD_Sid\Kurs_AISD_Sid.cpp(27): warning C4715: binsrch: значение возвращается не при всех путях выполнения
+  Kurs_AISD_Sid.vcxproj -> X:\github\Kurs_AISD_Sid\Debug\Kurs_AISD_Sid.exe

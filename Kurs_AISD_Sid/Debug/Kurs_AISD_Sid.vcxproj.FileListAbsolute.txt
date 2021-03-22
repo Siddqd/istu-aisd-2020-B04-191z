@@ -1,0 +1,2 @@
+X:\github\Kurs_AISD_Sid\Debug\Kurs_AISD_Sid.exe
+X:\github\Kurs_AISD_Sid\Debug\Kurs_AISD_Sid.pdb
